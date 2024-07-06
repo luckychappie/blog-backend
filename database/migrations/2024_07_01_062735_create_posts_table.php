@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
             $table->text('content');
+            $table->integer('view_count')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();
         });

@@ -32,10 +32,11 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::prefix('posts')->controller(PostController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('/popular-posts', 'popularPosts');
+    Route::get('/recent-posts', 'recentPosts');
     Route::get('/{id}', 'show');
 });
 
 Route::middleware('auth:api')->prefix('comments')->controller(CommentController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/{id}', 'show');
+    Route::post('/send', 'store');
 });

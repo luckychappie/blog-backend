@@ -20,9 +20,11 @@ class PostFactory extends Factory
         return [
             'title' => $title,
             'slug' => $slug,
-            'content' => $this->faker->paragraph,
-            'user_id' => User::factory(),
+            'content' => $this->faker->paragraph(10),
+            'user_id' =>1,
+            'thumbnail' => 'traveller.jpg',
             'is_published' => 1,
+            'view_count' => $this->faker->randomNumber(5)
         ];
     }
 }

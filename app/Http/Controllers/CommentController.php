@@ -23,9 +23,9 @@ class CommentController extends Controller
         ]);
 
         $comment = Comment::create([
-            'message' => $request->title,
-            'post_id' => $request->description,
-            'user_id' => $request->description,
+            'message' => $request->message,
+            'post_id' => $request->post_id,
+            'user_id' => $request->user_id,
         ]);
 
         return response()->json([
