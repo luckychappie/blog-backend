@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::where('is_published', 1)->orderBy('view_count', 'DESC')->paginate(9);
+        $search =  $request->query('search');
+        $posts = Post::where('is_published', 1)
+                ->whereAny([
+                    'title',
+                    'content',
+                ], 'LIKE', "%$search%")
+                ->orderBy('view_count', 'DESC')
+                ->paginate(9);
         return response()->json([
             'status' => 'success',
             'posts' => $posts,

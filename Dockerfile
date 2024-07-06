@@ -1,9 +1,5 @@
-# Dockerfile
-
-FROM php:8.2.13-fpm
-
-# Set working directory
-WORKDIR /var/www
+# Use the official PHP image
+FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -11,41 +7,31 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    locales \
+    libzip-dev \
+    libonig-dev \
+    libicu-dev \
     zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
     unzip \
     git \
     curl \
-    libonig-dev \
-    libzip-dev \
-    zip \
-    libpq-dev
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring zip exif pcntl intl
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy wait-for-it script
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+# Set working directory
+WORKDIR /var/www
 
-# Copy existing application directory contents
+# Copy application files
 COPY . /var/www
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
-
-# Install dependencies using Composer
-RUN composer update --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip
-
-# Change current user to www
-USER www-data
+# Set permissions
+RUN chown -R www-data:www-data /var/www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
