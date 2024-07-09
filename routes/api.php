@@ -39,4 +39,5 @@ Route::prefix('posts')->controller(PostController::class)->group(function () {
 
 Route::middleware('auth:api')->prefix('comments')->controller(CommentController::class)->group(function () {
     Route::post('/send', 'store');
+    Route::get('/{post_id}', 'index');
 });

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $comments = Comment::all();
+        $comments = Comment::with('user')->where('post_id', $request->post_id)->get();
         return response()->json([
             'status' => 'success',
             'comments' => $comments,
@@ -28,10 +28,12 @@ class CommentController extends Controller
             'user_id' => $request->user_id,
         ]);
 
+        $commentdata = Comment::where('id', $comment->id)->with('user')->first();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Comment created successfully',
-            'comment' => $comment,
+            'comment' => $commentdata,
         ]);
     }
 
