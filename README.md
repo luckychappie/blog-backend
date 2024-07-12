@@ -6,7 +6,7 @@
 
 Ensure you have Docker Desktop installed on your Windows machine. You can download it from Docker's official website [https://www.docker.com].
 
-There are 3 steps to run the blog website:
+There are 4 steps to run the blog website:
 
 Step1. run the comment on terminal:
 
@@ -22,7 +22,16 @@ Step2. For database creation:
 docker-compose exec app php artisan migrate --seed
 ```
 
-Step3. Now you can run [http://localhost:8000] in your browser:
+
+Step3. Configuration for Websocket Notification:
+
+```bash
+In .env file, use [websockets]  for  PUSHER_HOST
+
+PUSHER_HOST=websockets
+```
+
+Step4. Now you can run [http://localhost:8000] in your browser:
 
 #
 
@@ -31,7 +40,7 @@ Step3. Now you can run [http://localhost:8000] in your browser:
 
 Ensure you have Composer installed on your Windows machine. You can download it from Docker's official website [https://getcomposer.org].
 
-There are 3 steps to run the blog website:
+There are 4 steps to run the blog website:
 
 Step1. run the comment on terminal:
 
@@ -49,7 +58,15 @@ Step2. For database creation:
  # Note: you can change database and other info in .env file
 ```
 
-Step3. To run the project:
+Step3. Configuration for Websocket Notification:
+
+```bash
+In .env file, use [websockets]  for  127.0.0.1
+
+# PUSHER_HOST=127.0.0.1 or your custom host 
+```
+
+Step4. To run the project:
 
 ```bash
  php artisan serve

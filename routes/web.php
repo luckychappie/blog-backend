@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PostNotificationEvent;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,10 @@ Route::get('/storage/{filename}', function ($filename) {
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/testnoti', function () {
+    broadcast(new PostNotificationEvent('Hello, World!'));
+    return 'Message sent!';
 });

@@ -33,6 +33,9 @@ COPY . /var/www
 # Set permissions
 RUN chown -R www-data:www-data /var/www
 
+# Copy Supervisor configuration
+COPY ./docker/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]

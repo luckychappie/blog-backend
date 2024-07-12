@@ -31,4 +31,22 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'pusher' => [
+        'driver' => 'pusher',
+        'key' => env('PUSHER_APP_KEY'),
+        'secret' => env('PUSHER_APP_SECRET'),
+        'app_id' => env('PUSHER_APP_ID'),
+        'options' => [
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'useTLS' => true,
+            'encrypted' => true,
+            'scheme' => env('PUSHER_SCHEME', 'https'),
+            'host' => 'api.pusherapp.com',
+            'port' => env('PUSHER_PORT', 443),
+            'curl_options' => [
+                CURLOPT_SSL_VERIFYPEER => false, // Disable SSL verification (not recommended for production)
+            ],
+        ],
+    ],
+
 ];
